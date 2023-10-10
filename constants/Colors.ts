@@ -10,6 +10,7 @@ export default {
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorLight,
     iconDefault: "#ccc",
+    sheetBackground: "#eee",
   },
   dark: {
     text: "#fff",
@@ -17,6 +18,7 @@ export default {
     tint: tintColorDark,
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorDark,
-    iconDefault: "#ccc",
+    iconDefault: "#333",
+    sheetBackground: "#222",
   },
 };

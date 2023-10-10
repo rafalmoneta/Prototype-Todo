@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import React from "react";
-import { Text, View } from "./Themed";
+import { Text, View, useThemeColor } from "./Themed";
 import {
   BottomSheetTextInput,
   TouchableOpacity,
@@ -17,15 +17,17 @@ const TodoBottomSheetContent = () => {
   // or useBottomSheetModal?
 
   // const [newTodo, setNewTodo] = React.useState("");
-
   const newTodo = useTodoStore((state) => state.newTodo);
   const addTodo = useTodoStore((state) => state.addTodo);
   const setNewTodo = useTodoStore((state) => state.setNewTodo);
 
   const { dismiss } = useBottomSheetModal();
 
+  const textColor = useThemeColor({}, "text");
+  const backgroundColor = useThemeColor({}, "iconDefault");
+
   return (
-    <View darkColor="#232b2b" style={styles.contentContainer}>
+    <View style={styles.contentContainer}>
       <View>
         <Text>New Todo:</Text>
         <BottomSheetTextInput
@@ -35,10 +37,7 @@ const TodoBottomSheetContent = () => {
           autoCorrect={false}
           // onChangeText={(text) => setNewTodo(text)}
           onChangeText={(text) => setNewTodo(text)}
-          style={[
-            styles.createTodoTextInput,
-            // { backgroundColor: inputBackgroundColor },
-          ]}
+          style={[styles.createTodoTextInput, { color: textColor }]}
         />
       </View>
 
@@ -48,18 +47,18 @@ const TodoBottomSheetContent = () => {
             dismiss();
             setNewTodo("");
           }}
-          style={styles.createTodoOptionsButton}
+          style={[styles.createTodoOptionsButton, { backgroundColor }]}
         >
-          <Text>Cancel</Text>
+          <Text style={{ color: textColor }}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             addTodo();
             setNewTodo("");
           }}
-          style={styles.createTodoOptionsButton}
+          style={[styles.createTodoOptionsButton, { backgroundColor }]}
         >
-          <Text>Add Todo</Text>
+          <Text style={{ color: textColor }}>Add Todo</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -86,7 +85,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
-    backgroundColor: "#eee",
   },
 });
 
