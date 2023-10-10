@@ -4,6 +4,7 @@ import { Pressable, useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
 import CustomHeader from "../../components/CustomHeader";
+import { Ionicons } from "@expo/vector-icons";
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -28,21 +29,19 @@ export default function TabLayout() {
         name="index"
         options={{
           // TODO: Create custom header component and rename it - everything is custom
-          header: () => <CustomHeader />, 
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
+          header: () => <CustomHeader />,
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="home" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="inbox"
+        options={{
+          title: "Inbox",
+          header: () => <CustomHeader />,
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="file-tray" size={24} color={color} />
           ),
         }}
       />

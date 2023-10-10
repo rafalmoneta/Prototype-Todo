@@ -22,7 +22,9 @@ export default function TodoScreen() {
     createTodoBottomSheetRef.current?.present();
   };
 
-  const unCompletedTodo = todos.filter((todo) => !todo.isCompleted);
+  const unCompletedTodo = todos.filter(
+    (todo) => !todo.isCompleted && todo.status !== "INBOX"
+  );
   const completedTodo = todos.filter((todo) => todo.isCompleted);
   const favoriteTodo = unCompletedTodo.filter((todo) => todo.isFavorite);
   const unfavoriteTodo = unCompletedTodo.filter((todo) => !todo.isFavorite);
@@ -32,13 +34,15 @@ export default function TodoScreen() {
       <TodoBottomSheet ref={createTodoBottomSheetRef} />
 
       <ScrollView>
-        <View style={styles.content}>
-          <Text style={styles.title}>Favorited Todos</Text>
-          <TodosList todos={favoriteTodo} />
-        </View>
+        {favoriteTodo.length > 0 && (
+          <View style={styles.content}>
+            <Text style={styles.title}>Highlighted Todos</Text>
+            <TodosList todos={favoriteTodo} />
+          </View>
+        )}
 
         <View style={[styles.content, { marginBottom: 0 }]}>
-          <Text style={styles.title}>All Todo</Text>
+          <Text style={styles.title}>Todos</Text>
           <TodosList todos={unfavoriteTodo} />
         </View>
 

@@ -8,8 +8,12 @@ import { useTodoStore } from "@/stores/todos";
 import { Todo } from "@/types/todo";
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
+  // TODO: move or think about that - it should be moved up
+  // case: when you dont want to display inbox icon
+  // and it is not reusable
   const toggleCompleteTodo = useTodoStore((state) => state.toggleCompleteTodo);
   const toggleFavoriteTodo = useTodoStore((state) => state.toggleFavoriteTodo);
+  const moveToInbox = useTodoStore((state) => state.moveToInbox);
   const iconColors = useThemeColor({}, "iconDefault");
 
   const isTodoChecked = todo.isCompleted;
@@ -28,7 +32,7 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
         isChecked={isTodoChecked}
         onPress={() => toggleCompleteTodo(todo.id)}
       />
-      
+
       <Text
         style={[
           styles.todoItemText,
@@ -40,7 +44,7 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
       </Text>
 
       <View style={styles.todoItemOptions}>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => moveToInbox(todo.id)}>
           <Ionicons
             name="file-tray-full-outline"
             size={24}
