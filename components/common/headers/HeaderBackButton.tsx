@@ -1,10 +1,10 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import React from "react";
-import { Link, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeColor } from "../Themed";
+import { useThemeColor } from "../../Themed";
 
-const HeaderLeftButton = () => {
+export const HeaderBackButton = () => {
   const navigation = useNavigation();
   const iconColors = useThemeColor(
     { light: "#222", dark: "#FFF" },
@@ -17,5 +17,3 @@ const HeaderLeftButton = () => {
     </TouchableOpacity>
   );
 };
-
-export default HeaderLeftButton;

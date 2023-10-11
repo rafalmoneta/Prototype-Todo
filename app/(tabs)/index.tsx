@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { Text, View, useThemeColor } from "@/components/Themed";
-import TodosList from "@/components/TodosList";
+import { TodosList } from "@/components/todo";
 import Colors from "@/constants/Colors";
 import { useTodoStore } from "@/stores/todos";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -28,7 +28,7 @@ export default function TodoScreen() {
   const completedTodos = todos.filter((todo) => todo.isCompleted);
   const favoriteTodos = uncompletedTodos.filter((todo) => todo.isFavorite);
   const unfavoriteTodos = uncompletedTodos.filter((todo) => !todo.isFavorite);
-  
+
   const inProgressTodos = unfavoriteTodos.filter(
     (todo) => todo.status === "IN-PROGRESS"
   );

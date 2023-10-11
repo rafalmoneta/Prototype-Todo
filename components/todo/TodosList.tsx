@@ -2,14 +2,14 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 import TodoItem from "./TodoItem";
-import { View } from "./Themed";
+import { View } from "../Themed";
 import { Todo } from "@/types/todo";
 
 interface TodosListProps {
   todos: Todo[];
 }
 
-const TodosList = ({ todos }: TodosListProps) => {
+export const TodosList = ({ todos }: TodosListProps) => {
   return (
     <View style={styles.todoListContainer}>
       {todos.map((todo) => (
@@ -25,5 +25,3 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 });
-
-export default TodosList;

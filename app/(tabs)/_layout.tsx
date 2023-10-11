@@ -1,9 +1,9 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import { Tabs } from "expo-router";
+import { useColorScheme } from "react-native";
 
-import Colors from "../../constants/Colors";
-import CustomHeader from "../../components/CustomHeader";
+import Colors from "@/constants/Colors";
+import { MainHeader } from "@/components/common/headers";
 import { Ionicons } from "@expo/vector-icons";
 
 /**
@@ -29,7 +29,7 @@ export default function TabLayout() {
         name="index"
         options={{
           // TODO: Create custom header component and rename it - everything is custom
-          header: () => <CustomHeader />,
+          header: () => <MainHeader />,
           tabBarIcon: ({ color }) => (
             <Ionicons name="home" size={24} color={color} />
           ),
@@ -39,7 +39,7 @@ export default function TabLayout() {
         name="inbox"
         options={{
           title: "Inbox",
-          header: () => <CustomHeader />,
+          header: () => <MainHeader />,
           tabBarIcon: ({ color }) => (
             <Ionicons name="file-tray" size={24} color={color} />
           ),

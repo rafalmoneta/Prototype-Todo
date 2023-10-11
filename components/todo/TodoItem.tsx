@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-import { Text, View, useThemeColor } from "./Themed";
+import { Text, View, useThemeColor } from "../Themed";
 import { useTodoStore } from "@/stores/todos";
 import { Todo } from "@/types/todo";
 import { Link } from "expo-router";

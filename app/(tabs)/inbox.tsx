@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { Text, View, useThemeColor } from "@/components/Themed";
-import TodosList from "@/components/TodosList";
+import { TodosList } from "@/components/todo";
 import Colors from "@/constants/Colors";
 import { useTodoStore } from "@/stores/todos";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
@@ -42,7 +42,6 @@ export default function InboxScreen() {
           <Text style={{ textAlign: "center" }}>Add new task to the Inbox!</Text>
         </TouchableOpacity>
       </View> */}
-
     </SafeAreaView>
   );
 }

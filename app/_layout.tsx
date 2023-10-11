@@ -10,7 +10,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import HeaderBackButton from "@/components/common/HeaderBackButton";
+import { HeaderBackButton } from "@/components/common/headers";
 
 export {
   // Catch any errors thrown by the Layout component.

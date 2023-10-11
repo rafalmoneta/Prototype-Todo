@@ -1,9 +1,8 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
-import Colors from "@/constants/Colors";
-import { useThemeColor } from "./Themed";
+import { useThemeColor } from "../../Themed";
 
-const CustomHeader = () => {
+export const MainHeader = () => {
   const backgroundColor = useThemeColor({}, "background");
 
   return (
@@ -25,5 +24,3 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-
-export default CustomHeader;
