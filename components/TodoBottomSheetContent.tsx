@@ -53,7 +53,7 @@ const TodoBottomSheetContent = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            addTodo();
+            addTodo("WAITING");
             setNewTodo("");
           }}
           style={[styles.createTodoOptionsButton, { backgroundColor }]}
