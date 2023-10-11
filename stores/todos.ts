@@ -7,7 +7,7 @@ import { Todo, TodoStatus } from "@/types/todo";
 interface TodoState {
   todos: Todo[];
   newTodo: Omit<Todo, "id">;
-  setNewTodo: (newTodo: string) => void;
+  setNewTodo: (todoFields: Partial<Todo>) => void;
   addTodo: (todo: TodoStatus) => void;
   toggleCompleteTodo: (id: number) => void;
   toggleFavoriteTodo: (id: number) => void;
@@ -79,22 +79,21 @@ const initialTodos: Todo[] = [
 export const initialNewTodo = {
   text: "",
   status: "INBOX" as TodoStatus,
+  description: "",
   isCompleted: false,
   isFavorite: false,
 };
 
 const addTodo = (
   todos: Todo[],
-  todoText: string,
-  todoStatus: TodoStatus
-): Todo[] => [
+  todoFields: Pick<Todo, "text" | "description" | "status">,
+) => [
   ...todos,
   {
     id: Math.max(0, Math.max(...todos.map(({ id }) => id))) + 1,
-    text: todoText,
-    status: todoStatus,
     isCompleted: false,
     isFavorite: false,
+    ...todoFields,
   },
 ];
 
@@ -126,15 +125,18 @@ export const useTodoStore = create<TodoState>()(
     (set, get) => ({
       todos: [...initialTodos],
       newTodo: initialNewTodo,
-      setNewTodo: (newTodoText: string) =>
+      setNewTodo: (todoFields: Partial<Todo>) =>
         set((state) => ({
           ...state,
-          newTodo: { ...state.newTodo, text: newTodoText },
+          newTodo: { ...state.newTodo, ...todoFields },
         })),
       addTodo: (todoStatus: TodoStatus) =>
         set((state) => ({
           ...state,
-          todos: addTodo(state.todos, state.newTodo.text, todoStatus),
+          todos: addTodo(state.todos, {
+            ...state.newTodo,
+            status: todoStatus,
+          }),
           newTodo: initialNewTodo,
         })),
       deleteTodo: (id: number) =>

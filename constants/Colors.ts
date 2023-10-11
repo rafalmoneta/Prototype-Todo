@@ -6,6 +6,8 @@ export default {
   red: "#ff0000",
   light: {
     text: "#000",
+    textSecondary: "#888",
+    textPlaceholder: "#ccc",
     background: "#fff",
     tint: tintColorLight,
     tabIconDefault: "#ccc",
@@ -16,6 +18,8 @@ export default {
   },
   dark: {
     text: "#fff",
+    textSecondary: "#ccc",
+    textPlaceholder: "#888",
     background: "#0e1111",
     tint: tintColorDark,
     tabIconDefault: "#ccc",

@@ -20,20 +20,34 @@ const TodoBottomSheetContent = () => {
   const { dismiss } = useBottomSheetModal();
 
   const textColor = useThemeColor({}, "text");
+  const textSecondaryColor = useThemeColor({}, "textSecondary");
+  const textPlaceholderColor = useThemeColor({}, "textPlaceholder");
   const backgroundColor = useThemeColor({}, "buttonBackground");
 
   return (
     <View style={styles.contentContainer}>
-      <View>
-        <Text>New Todo:</Text>
+      <View style={styles.contentInputsContainer}>
+        <Text style={{ color: textSecondaryColor }}>New Todo:</Text>
         <BottomSheetTextInput
           placeholder="Enter your todo"
-          // value={newTodo}
           value={newTodo.text}
           autoCorrect={false}
-          // onChangeText={(text) => setNewTodo(text)}
-          onChangeText={(text) => setNewTodo(text)}
+          onChangeText={(text) => setNewTodo({ text })}
           style={[styles.createTodoTextInput, { color: textColor }]}
+          placeholderTextColor={textPlaceholderColor}
+        />
+
+        <BottomSheetTextInput
+          multiline
+          placeholder="Your todo description"
+          value={newTodo.description}
+          autoCorrect={false}
+          onChangeText={(description) => setNewTodo({ description})}
+          style={[
+            styles.createTodoDescriptionInput,
+            { color: textSecondaryColor },
+          ]}
+          placeholderTextColor={textPlaceholderColor}
         />
       </View>
 
@@ -41,7 +55,7 @@ const TodoBottomSheetContent = () => {
         <TouchableOpacity
           onPress={() => {
             dismiss();
-            setNewTodo("");
+            setNewTodo({ text: "", description: "" });
           }}
           style={[styles.createTodoOptionsButton, { backgroundColor }]}
         >
@@ -50,7 +64,7 @@ const TodoBottomSheetContent = () => {
         <TouchableOpacity
           onPress={() => {
             addTodo("WAITING");
-            setNewTodo("");
+            setNewTodo({ text: "", description: "" });
           }}
           style={[styles.createTodoOptionsButton, { backgroundColor }]}
         >
@@ -65,11 +79,20 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 16,
+    paddingBottom: 0
+  },
+  contentInputsContainer: {
+    marginBottom: 8,
   },
   createTodoTextInput: {
     fontSize: 16,
-    marginTop: 8,
-    paddingVertical: 8,
+    marginTop: 12,
+    marginBottom: 2,
+    borderRadius: 8,
+  },
+  createTodoDescriptionInput: {
+    fontSize: 14,
+    marginBottom: 8,
     borderRadius: 8,
   },
   createTodoOptionsContainer: {

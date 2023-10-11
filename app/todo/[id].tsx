@@ -20,8 +20,10 @@ const TodoInfoPage = () => {
   const todo = store.getTodoById(Number(params.id));
 
   const buttonBackground = useThemeColor({}, "buttonBackground");
+  const iconColor = useThemeColor({}, "iconDefault");
   const backgroundColor = useThemeColor({}, "background");
   const textColor = useThemeColor({}, "text");
+  const textSecondaryColor = useThemeColor({}, "textSecondary");
   const borderColor = useThemeColor(
     { light: "#eee", dark: "rgba(255,255,255,0.1)" },
     "background"
@@ -36,10 +38,34 @@ const TodoInfoPage = () => {
           <TextInput
             multiline
             value={todo.text}
-            style={[styles.todoTextInput, { color: textColor }]}
-            placeholder="Buy React Native course"
+            onChangeText={(text) => store.updateTodo(todo.id, { text })}
+            style={[
+              styles.todoTextInput,
+              { color: textColor, fontWeight: "500" },
+            ]}
+            placeholder="Todo title"
           />
-          <Text>ID: {params.id}</Text>
+
+          <View style={styles.fieldContainer}>
+            <Ionicons
+              name="reader-outline"
+              size={24}
+              color={iconColor}
+              style={styles.fieldContainerIcon}
+            />
+            <TextInput
+              multiline
+              value={todo.description}
+              onChangeText={(description) =>
+                store.updateTodo(todo.id, { description })
+              }
+              style={[
+                styles.fieldContainerContent,
+                { color: textSecondaryColor, fontSize: 16, lineHeight: 22 },
+              ]}
+              placeholder="Todo's description"
+            />
+          </View>
         </View>
       </ScrollView>
 
@@ -61,11 +87,9 @@ const TodoInfoPage = () => {
           ]}
           onPress={() => store.toggleCompleteTodo(todo.id)}
         >
-          {todo.isCompleted ? (
-            <Text style={{ textAlign: "center" }}>Mark as uncompleted!</Text>
-          ) : (
-            <Text style={{ textAlign: "center" }}>Mark as completed!</Text>
-          )}
+          <Text style={{ textAlign: "center" }}>
+            {todo.isCompleted ? "Mark as uncompleted!" : "Mark as completed!"}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -99,6 +123,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
     borderRadius: 8,
+  },
+  fieldContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginBottom: 8,
+  },
+  fieldContainerIcon: {
+    marginTop: 8,
+    marginRight: 12,
+  },
+  fieldContainerContent: {
+    flex: 1,
   },
 });
 

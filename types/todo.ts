@@ -9,6 +9,7 @@ export interface Todo {
   id: number;
   text: string;
   status: TodoStatus;
+  description?: string;
   isCompleted: boolean;
   isFavorite: boolean;
 }
