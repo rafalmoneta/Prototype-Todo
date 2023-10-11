@@ -6,6 +6,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Text, View, useThemeColor } from "./Themed";
 import { useTodoStore } from "@/stores/todos";
 import { Todo } from "@/types/todo";
+import { Link } from "expo-router";
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
   // TODO: move or think about that - it should be moved up
@@ -33,15 +34,18 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
         onPress={() => toggleCompleteTodo(todo.id)}
       />
 
-      <Text
-        style={[
-          styles.todoItemText,
-          { textDecorationLine: isTodoChecked ? "line-through" : "none" },
-        ]}
-        numberOfLines={1}
-      >
-        {todo.text}
-      </Text>
+      <Link asChild href={`/todo/${todo.id}`} style={styles.todoItemText}>
+        <TouchableOpacity>
+          <Text
+            style={{
+              textDecorationLine: isTodoChecked ? "line-through" : "none",
+            }}
+            numberOfLines={1}
+          >
+            {todo.text}
+          </Text>
+        </TouchableOpacity>
+      </Link>
 
       <View style={styles.todoItemOptions}>
         <TouchableOpacity onPress={() => moveToInbox(todo.id)}>

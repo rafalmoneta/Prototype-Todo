@@ -14,6 +14,7 @@ interface TodoState {
   deleteTodo: (id: number) => void;
   updateTodo: (id: number, todoFields: Partial<Todo>) => void;
   moveToInbox: (id: number) => void;
+  getTodoById: (id: number) => Todo | undefined;
 }
 
 const initialTodos: Todo[] = [
@@ -122,7 +123,7 @@ const toggleFavoriteTodo = (todos: Todo[], id: number) =>
 
 export const useTodoStore = create<TodoState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       todos: [...initialTodos],
       newTodo: initialNewTodo,
       setNewTodo: (newTodoText: string) =>
@@ -161,6 +162,7 @@ export const useTodoStore = create<TodoState>()(
           ...state,
           todos: updateTodo(state.todos, id, { status: "INBOX" }),
         })),
+      getTodoById: (id: number) => get().todos.find((todo) => todo.id === id),
     }),
     {
       name: "todos-storage",

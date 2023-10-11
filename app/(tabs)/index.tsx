@@ -22,28 +22,39 @@ export default function TodoScreen() {
     createTodoBottomSheetRef.current?.present();
   };
 
-  const unCompletedTodo = todos.filter(
+  const uncompletedTodos = todos.filter(
     (todo) => !todo.isCompleted && todo.status !== "INBOX"
   );
-  const completedTodo = todos.filter((todo) => todo.isCompleted);
-  const favoriteTodo = unCompletedTodo.filter((todo) => todo.isFavorite);
-  const unfavoriteTodo = unCompletedTodo.filter((todo) => !todo.isFavorite);
+  const completedTodos = todos.filter((todo) => todo.isCompleted);
+  const favoriteTodos = uncompletedTodos.filter((todo) => todo.isFavorite);
+  const unfavoriteTodos = uncompletedTodos.filter((todo) => !todo.isFavorite);
+  
+  const inProgressTodos = unfavoriteTodos.filter(
+    (todo) => todo.status === "IN-PROGRESS"
+  );
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor }]}>
       <TodoBottomSheet ref={createTodoBottomSheetRef} />
 
       <ScrollView>
-        {favoriteTodo.length > 0 && (
+        {favoriteTodos.length > 0 && (
           <View style={styles.content}>
             <Text style={styles.title}>Highlighted Todos</Text>
-            <TodosList todos={favoriteTodo} />
+            <TodosList todos={favoriteTodos} />
+          </View>
+        )}
+
+        {inProgressTodos.length > 0 && (
+          <View style={styles.content}>
+            <Text style={styles.title}>Highlighted Todos</Text>
+            <TodosList todos={inProgressTodos} />
           </View>
         )}
 
         <View style={[styles.content, { marginBottom: 0 }]}>
           <Text style={styles.title}>Todos</Text>
-          <TodosList todos={unfavoriteTodo} />
+          <TodosList todos={unfavoriteTodos} />
         </View>
 
         <View
@@ -54,7 +65,7 @@ export default function TodoScreen() {
 
         <View style={styles.content}>
           <Text style={styles.title}>Completed</Text>
-          <TodosList todos={completedTodo} />
+          <TodosList todos={completedTodos} />
         </View>
       </ScrollView>
 

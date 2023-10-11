@@ -12,10 +12,6 @@ const TodoBottomSheetContent = () => {
   // TODO: move to Zustand store or/and use ReactHookForm (!)
   // or use simple ref to store and update the value
 
-  // why this is so slow when typing fast or deleting
-  // what force rerender? BottomSheetTextInput? or Zustand?
-  // or useBottomSheetModal?
-
   // const [newTodo, setNewTodo] = React.useState("");
   const newTodo = useTodoStore((state) => state.newTodo);
   const addTodo = useTodoStore((state) => state.addTodo);
@@ -24,7 +20,7 @@ const TodoBottomSheetContent = () => {
   const { dismiss } = useBottomSheetModal();
 
   const textColor = useThemeColor({}, "text");
-  const backgroundColor = useThemeColor({}, "iconDefault");
+  const backgroundColor = useThemeColor({}, "buttonBackground");
 
   return (
     <View style={styles.contentContainer}>
