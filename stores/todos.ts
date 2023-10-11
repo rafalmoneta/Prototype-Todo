@@ -1,5 +1,8 @@
-import { Todo, TodoStatus } from "@/types/todo";
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { Todo, TodoStatus } from "@/types/todo";
 
 interface TodoState {
   todos: Todo[];
@@ -117,43 +120,51 @@ const toggleFavoriteTodo = (todos: Todo[], id: number) =>
     isFavorite: todo.id === id ? !todo.isFavorite : todo.isFavorite,
   }));
 
-export const useTodoStore = create<TodoState>()((set) => ({
-  todos: [...initialTodos],
-  newTodo: initialNewTodo,
-  setNewTodo: (newTodoText: string) =>
-    set((state) => ({
-      ...state,
-      newTodo: { ...state.newTodo, text: newTodoText },
-    })),
-  addTodo: (todoStatus: TodoStatus) =>
-    set((state) => ({
-      ...state,
-      todos: addTodo(state.todos, state.newTodo.text, todoStatus),
+export const useTodoStore = create<TodoState>()(
+  persist(
+    (set) => ({
+      todos: [...initialTodos],
       newTodo: initialNewTodo,
-    })),
-  deleteTodo: (id: number) =>
-    set((state) => ({
-      ...state,
-      todos: deleteTodo(state.todos, id),
-    })),
-  updateTodo: (id: number, todoFields: Partial<Todo>) =>
-    set((state) => ({
-      ...state,
-      todos: updateTodo(state.todos, id, todoFields),
-    })),
-  toggleCompleteTodo: (id: number) =>
-    set((state) => ({
-      ...state,
-      todos: toggleCompleteTodo(state.todos, id),
-    })),
-  toggleFavoriteTodo: (id: number) =>
-    set((state) => ({
-      ...state,
-      todos: toggleFavoriteTodo(state.todos, id),
-    })),
-  moveToInbox: (id: number) =>
-    set((state) => ({
-      ...state,
-      todos: updateTodo(state.todos, id, { status: "INBOX" }),
-    })),
-}));
+      setNewTodo: (newTodoText: string) =>
+        set((state) => ({
+          ...state,
+          newTodo: { ...state.newTodo, text: newTodoText },
+        })),
+      addTodo: (todoStatus: TodoStatus) =>
+        set((state) => ({
+          ...state,
+          todos: addTodo(state.todos, state.newTodo.text, todoStatus),
+          newTodo: initialNewTodo,
+        })),
+      deleteTodo: (id: number) =>
+        set((state) => ({
+          ...state,
+          todos: deleteTodo(state.todos, id),
+        })),
+      updateTodo: (id: number, todoFields: Partial<Todo>) =>
+        set((state) => ({
+          ...state,
+          todos: updateTodo(state.todos, id, todoFields),
+        })),
+      toggleCompleteTodo: (id: number) =>
+        set((state) => ({
+          ...state,
+          todos: toggleCompleteTodo(state.todos, id),
+        })),
+      toggleFavoriteTodo: (id: number) =>
+        set((state) => ({
+          ...state,
+          todos: toggleFavoriteTodo(state.todos, id),
+        })),
+      moveToInbox: (id: number) =>
+        set((state) => ({
+          ...state,
+          todos: updateTodo(state.todos, id, { status: "INBOX" }),
+        })),
+    }),
+    {
+      name: "todos-storage",
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+);
