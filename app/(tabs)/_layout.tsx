@@ -52,6 +52,15 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="quotes"
+        options={{
+          title: "Quotes",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="compass-outline" size={24} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

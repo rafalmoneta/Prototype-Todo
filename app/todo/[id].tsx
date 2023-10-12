@@ -29,7 +29,12 @@ const TodoInfoPage = () => {
     "background"
   );
 
-  if (!todo) return <View>Todo with this ID not found</View>;
+  if (!todo)
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Todo with this ID not found</Text>
+      </View>
+    );
 
   return (
     <SafeAreaView style={styles.container}>
