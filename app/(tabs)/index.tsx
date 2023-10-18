@@ -33,6 +33,10 @@ export default function TodoScreen() {
     (todo) => todo.status === "IN-PROGRESS"
   );
 
+  const otherTodos = unfavoriteTodos.filter(
+    (todo) => todo.status !== "IN-PROGRESS"
+  );
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor }]}>
       <TodoBottomSheet ref={createTodoBottomSheetRef} />
@@ -47,14 +51,14 @@ export default function TodoScreen() {
 
         {inProgressTodos.length > 0 && (
           <View style={styles.content}>
-            <Text style={styles.title}>Highlighted Todos</Text>
+            <Text style={styles.title}>In Progress Todos</Text>
             <TodosList todos={inProgressTodos} />
           </View>
         )}
 
         <View style={[styles.content, { marginBottom: 0 }]}>
           <Text style={styles.title}>Todos</Text>
-          <TodosList todos={unfavoriteTodos} />
+          <TodosList todos={otherTodos} />
         </View>
 
         <View

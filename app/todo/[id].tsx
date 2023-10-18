@@ -12,6 +12,8 @@ import { View, Text, useThemeColor } from "@/components/Themed";
 import { Ionicons } from "@expo/vector-icons";
 import { useTodoStore } from "@/stores/todos";
 import Colors from "@/constants/Colors";
+import { Select } from "@/components/common/select";
+import { TodoStatus } from "@/types/todo";
 
 const TodoInfoPage = () => {
   const params = useGlobalSearchParams();
@@ -40,6 +42,21 @@ const TodoInfoPage = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ flex: 1, backgroundColor }}>
         <View style={styles.content}>
+          <Select
+            value={todo.status}
+            placeholder="Select a Todo status"
+            onSelect={(option) =>
+              store.updateTodo(todo.id, { status: option.value as TodoStatus })
+            }
+            options={[
+              { label: "Inbox", value: "INBOX" },
+              { label: "Waiting", value: "WAITING" },
+              { label: "Next Action", value: "NEXT-ACTION" },
+              { label: "In Progress", value: "IN-PROGRESS" },
+              { label: "Completed", value: "COMPLETED" },
+            ]}
+          />
+
           <TextInput
             multiline
             value={todo.text}
@@ -70,6 +87,16 @@ const TodoInfoPage = () => {
               ]}
               placeholder="Todo's description"
             />
+          </View>
+
+          <View style={[styles.fieldContainer, { alignItems: "center" }]}>
+            <Ionicons
+              name="git-compare-outline"
+              size={24}
+              color={iconColor}
+              style={[styles.fieldContainerIcon, { marginTop: 0 }]}
+            />
+            <Text>Status: {todo.status}</Text>
           </View>
         </View>
       </ScrollView>
@@ -112,7 +139,7 @@ const styles = StyleSheet.create({
   },
   todoTextInput: {
     fontSize: 24,
-    marginBottom: 8,
+    marginVertical: 8,
   },
   footer: {
     flexDirection: "row",

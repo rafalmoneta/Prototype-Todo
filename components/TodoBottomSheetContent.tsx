@@ -7,6 +7,8 @@ import {
   useBottomSheetModal,
 } from "@gorhom/bottom-sheet";
 import { useTodoStore } from "@/stores/todos";
+import { Select } from "./common/select";
+import { TodoStatus } from "@/types/todo";
 
 const TodoBottomSheetContent = () => {
   // TODO: move to Zustand store or/and use ReactHookForm (!)
@@ -28,6 +30,7 @@ const TodoBottomSheetContent = () => {
     <View style={styles.contentContainer}>
       <View style={styles.contentInputsContainer}>
         <Text style={{ color: textSecondaryColor }}>New Todo:</Text>
+
         <BottomSheetTextInput
           placeholder="Enter your todo"
           value={newTodo.text}
@@ -42,12 +45,27 @@ const TodoBottomSheetContent = () => {
           placeholder="Your todo description"
           value={newTodo.description}
           autoCorrect={false}
-          onChangeText={(description) => setNewTodo({ description})}
+          onChangeText={(description) => setNewTodo({ description })}
           style={[
             styles.createTodoDescriptionInput,
             { color: textSecondaryColor },
           ]}
           placeholderTextColor={textPlaceholderColor}
+        />
+
+        <Select
+          value={newTodo.status}
+          placeholder="Select a Todo status"
+          onSelect={(option) =>
+            setNewTodo({ status: option.value as TodoStatus })
+          }
+          options={[
+            { label: "Inbox", value: "INBOX" },
+            { label: "Waiting", value: "WAITING" },
+            { label: "Next Action", value: "NEXT-ACTION" },
+            { label: "In Progress", value: "IN-PROGRESS" },
+            { label: "Completed", value: "COMPLETED" },
+          ]}
         />
       </View>
 
@@ -63,7 +81,7 @@ const TodoBottomSheetContent = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            addTodo("WAITING");
+            addTodo(newTodo.status);
             setNewTodo({ text: "", description: "" });
           }}
           style={[styles.createTodoOptionsButton, { backgroundColor }]}
@@ -79,7 +97,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     padding: 16,
-    paddingBottom: 0
+    paddingBottom: 0,
   },
   contentInputsContainer: {
     marginBottom: 8,

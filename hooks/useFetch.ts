@@ -3,7 +3,10 @@ import axios from "axios";
 
 interface QueryOptions {} // TODO: add type
 
-export default function useFetch<T>(endpoint: string, query: any) {
+export default function useFetch<T>(
+  endpoint: string,
+  query: Record<string, string>
+) {
   const [data, setData] = React.useState<[T] | null>(null);
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -14,8 +17,11 @@ export default function useFetch<T>(endpoint: string, query: any) {
     params: { ...query },
   };
 
-  const fetchData = async () => {
+  const fetchData = React.useCallback(async (ignore: boolean) => {
     setIsLoading(true);
+
+    if (ignore) return;
+
     try {
       const response = await axios.request(options);
       setData(response.data);
@@ -26,23 +32,21 @@ export default function useFetch<T>(endpoint: string, query: any) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   React.useEffect(() => {
-    // let ignore = false;
+    let ignore = false;
 
-    // fetchData(ignore);
+    fetchData(ignore);
 
-    fetchData();
-    
-    // return () => {
-    //   ignore = true;
-    // };
-  }, []);
+    return () => {
+      ignore = true;
+    };
+  }, [fetchData]);
 
   const refetch = () => {
     setIsLoading(true);
-    fetchData();
+    fetchData(false);
   };
 
   return { data, error, isLoading, refetch };
